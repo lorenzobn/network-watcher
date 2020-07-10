@@ -12,11 +12,6 @@ def plotGraph(database_path):
     data = df[['domain', 'traffic_from', 'traffic_to']]
     data.insert(0,'from', "localhost")
     data.columns = ['from','to','traffic_from', 'traffic_to']
-    
-
-    #Set figure size
-    plt.figure(3, figsize=(14,8))
-
 
     # Build the graph
     G=nx.from_pandas_edgelist(data, 'from', 'to', create_using=nx.Graph())
@@ -47,4 +42,6 @@ def plotGraph(database_path):
     x_margin = (x_max - x_min) * 0.25
     plt.xlim(x_min - x_margin, x_max + x_margin)
 
+    #Set figure size
+    plt.figure(3, figsize=(14,8))
     plt.show()
