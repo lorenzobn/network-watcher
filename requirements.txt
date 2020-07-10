@@ -1,0 +1,5 @@
+numpy==1.17.2
+pandas==0.23.0
+matplotlib==2.2.2
+scapy==2.4.3
+networkx==2.1
