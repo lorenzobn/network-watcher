@@ -1,6 +1,6 @@
 import sqlite3
-import sys
 import datetime
+import sys
 
 class Handler():    
     def __init__(self, database_path):
@@ -39,7 +39,6 @@ class Handler():
     def setIPAddress(self, ip, domain):
         self.databaseCursor.execute("UPDATE network SET ip_addr=? WHERE domain=?", (ip, domain,))
         self.databaseConn.commit()        
-
 
     def updateCount(self, domain):
         self.databaseCursor.execute("UPDATE network SET req_count = req_count+1,last_seen=? WHERE domain=?;", (datetime.datetime.now(), domain,))
