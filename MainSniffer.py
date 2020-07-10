@@ -19,6 +19,7 @@ db_handler = None
 
 def exit_f():
     print('Closing caputure with {} packets captured'.format(pck_cnt))
+    logging.info("Closing caputure with {} packets captured".format(pck_cnt))
     sys.exit(0)
 
 
