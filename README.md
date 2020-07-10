@@ -2,16 +2,16 @@
 
 A command-line tool to record network activity that makes you able to plot a graph of the available traffic in the database. It uses SQLite to store all the traffic.
 
-## Getting Started
+## Getting Started :page_facing_up:
 
-### Prerequisites
+### Prerequisites 
 There are a couple of libraries that you have to install before running the tool. Be sure to have all of them installed by running this:
 
 ```
 pip3 install -r requirements.txt 
 ```
 
-### Running the tool
+### Running the tool :heavy_check_mark:
 
 To run the tool in the intercept mode, you just have to type the following line in your shell:
 
