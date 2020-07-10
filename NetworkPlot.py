@@ -24,7 +24,6 @@ def plotGraph(database_path):
 
     labels = {}
     sizes = []
-    print(data)
     for node in G.nodes():
         if(node=='localhost'): sizes.append(0)
         else:
@@ -33,15 +32,11 @@ def plotGraph(database_path):
                 if(imp>THREESHOLD): sizes.append(THREESHOLD)
                 else: sizes.append(imp)
 
-    print(sizes)
-    print(G.nodes())
-
     nx.draw(G,pos, with_labels=True,
             node_size=sizes,
             node_color='skyblue', 
             width=1.0,
             edge_color='orange',
-            # label customization
             font_size=12,
             font_color="#333333")
 
