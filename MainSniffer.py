@@ -6,7 +6,7 @@ import sys
 import logging
 import argparse
 
-#globals 
+#globals
 search_filter = ""
 is_verbose = False
 pck_cnt = 0
@@ -24,7 +24,7 @@ def exit_f():
 
 
 def is_validIP(ip):
-    try: 
+    try:
         socket.inet_aton(ip)
         return True
     except:
@@ -37,18 +37,17 @@ def pck_callback(packet):
         global is_verbose
         global db_handler
         pck_cnt += 1
-    
         if packet.haslayer(DNS):
-            if(packet.ancount>0 and packet.qd.qtype==1):
+            if packet.ancount > 0 and packet.qd.qtype == 1:
                 for x in range(packet.ancount):
                     if not is_validIP(packet.an[x].rdata): continue
                     db_handler.setIPAddress(packet.an[x].rdata,packet.qd.qname.decode("utf-8")[:-1])
-                    if is_verbose: 
-                        print("[+] DNS ANS: {} is at {}".format(packet.qd.qname[:-1],packet.an[x].rdata))
+                    if is_verbose:
+                        print("[+] DNS ANS: {} is at {}".format(packet.qd.qname[:-1], packet.an[x].rdata))
                     
-            if(DNSQR in packet):
+            if DNSQR in packet:
                 query_name = packet[DNSQR].qname.decode("utf-8")[:-1]
-                if(db_handler.checkDomain(query_name)): 
+                if db_handler.checkDomain(query_name): 
                     db_handler.updateCount(query_name)
                 else:
                     db_handler.insertNew(query_name)
@@ -61,7 +60,7 @@ def pck_callback(packet):
             
             
         if packet.haslayer(TCP):
-            if(packet!=None):
+            if packet is not None:
                 p = packet[0][1]
                 from_ip = p.src
                 to_ip = p.dst
@@ -69,24 +68,24 @@ def pck_callback(packet):
                 check_in = db_handler.checkIP(from_ip)
                 check_out = db_handler.checkIP(to_ip)
                 
-                if(check_in!=None):
+                if check_in is not None:
                     #inbound traffic
                     db_handler.updateTraffic(check_in[0],"in",len(packet))
-                if(check_out!=None):
+                if check_out is not None:
                     #outbound traffic
                     db_handler.updateTraffic(check_out[0],"out",len(packet))
 
     
     except Exception as e:
         print("Error occurred. See "+LOG_PATH)
-        logging.error("Sniffing activity stopped due to error:  "+str(e))
+        logging.error("Sniffing activity stopped due to error:  ",str(e))
         sys.exit(1)
 
 def main(count):
-    logging.info("Sniffing started with filter: "+search_filter)
+    logging.info("Sniffing started with filter: ",search_filter)
     try:
         print("Press Ctrl-C to stop the sniffing activity")
-        sniff(filter=search_filter,prn=pck_callback,store=0, count=count)
+        sniff(filter=search_filter, prn=pck_callback, store=0, count=count)
     except KeyboardInterrupt:
         exit_f()
 
@@ -108,7 +107,7 @@ if __name__ == '__main__':
         db_handler = Handler(DEFAULT_DATABASE_PATH)
     except Exception as e:
         print("Error occurred. See "+LOG_PATH)
-        logging.error("Database init failed. Error report: "+str(e))
+        logging.error("Database init failed. Error report: ",str(e))
         sys.exit(1)
 
     if(args.verbose != 0): 
